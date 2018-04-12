@@ -20,12 +20,12 @@ def vector_longitudes (lista_archivo):
 
 	for seq in lista_archivo:
 		lineas = seq.split("\n")
-		len = len("".join(lineas[1:]))
+		longi = len("".join(lineas[1:]))
 
-		if len in dic:
-			dic[len] += 1
+		if longi in dic:
+			dic[longi] += 1
 		else:
-			dic[len] = 1
+			dic[longi] = 1
 
 	x = list()
 	y = list()
@@ -37,12 +37,15 @@ def vector_longitudes (lista_archivo):
 	return x, y
 
 def harry_plotter (x, y):
+
+	print x
+	print y
 	plt.bar(x, y)
 	plt.show()
 
 
 
 input = sys.argv[1]
-lista = fasta2lib(input)
+lista = fasta2list(input, delim)
 longitudes, conteos = vector_longitudes(lista)
 harry_plotter(longitudes, conteos)
