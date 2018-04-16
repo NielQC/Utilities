@@ -9,27 +9,29 @@ import sys
 from termcolor import *
 import argparse
 
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description="Reporta la longitud de las lecturas en un fasta. Está pensado para assemblies, aunque se puede utilizar con cualquier multifasta")
 
+parser.add_argument("-d", "--delimiter", default=">", help="Caracter para spliter el multifasta en las secuencias individuales (default: '>')")
+parser.add_argument("-max", help="Umbral de longitud superior para reportar por terminal (default: 100k)", default= 100000, type= int)
+parser.add_argument("-min", help="Umbral de longitud inferior para reportar por terminal (default: 500)", default= 500, type = int) 
+parser.add_argument("FASTA")
+parser.add_argument('--version', action='version', version='April, 2018')
 
+args = parser.parse_args()
 
-
-delim = ">"
-sub = True
-min_len_value = 5000
 
 ## Función para leer el archivo y devolver una lista con las secuencias
-def fasta2list (path, delim):
-	a = open(path, "r")
+def fasta2list (file, delim):
+	a = open(file, "r")
 	b = a.read().split(delim)
 	return b
 
 ## Función que coge la lista proporcionada por la función anterior, 
 ## calcula las longitudes y reporta
-def reportar_longitudes (lista_archivo):
+def reportar_longitudes (lista_archivo, min_value, max_value):
 	
-	higher_100k = 0
-	lower_500 = 0
+	higher = 0
+	lower = 0
 
 	total = 0	
 	for seq in lista_archivo:
@@ -37,23 +39,31 @@ def reportar_longitudes (lista_archivo):
 		lineas = seq.split("\n")
 		if len("".join(lineas[1:])) != 0:
 		
-			if len("".join(lineas[1:])) > 100000:
-				higher_100k += 1
+			if len("".join(lineas[1:])) > max_value:
+				higher += 1
 		
-			if len("".join(lineas[1:])) < 500:
-				lower_500 += 1
+			if len("".join(lineas[1:])) < min_value:
+				lower += 1
 
 			print len("".join(lineas[1:]))
 
 
 	print
 	print colored("Un total de ", "yellow", attrs=["bold"]) + colored(str(total), "yellow", attrs=["bold", "underline"]) + colored(" contigs:", "yellow", attrs=["bold"])
-	print colored("\t- ", "yellow", attrs=["bold"]) + colored(str(higher_100k), "yellow", attrs=["bold"]) + colored(" superiores a 100k pb.", "yellow", attrs=["bold"])
-	print colored("\t- ", "yellow", attrs=["bold"]) + colored(str(lower_500), "yellow", attrs=["bold"]) + colored(" inferiores a 500 pb.", "yellow", attrs=["bold"])
+	print colored("\t- ", "yellow", attrs=["bold"]) + colored(str(higher), "yellow", attrs=["bold"]) + colored(" superiores a ", "yellow", attrs=["bold"]) + colored(str(max_value) + " pb.", "yellow", attrs=["bold"])
+	print colored("\t- ", "yellow", attrs=["bold"]) + colored(str(lower), "yellow", attrs=["bold"]) + colored(" inferiores a ", "yellow", attrs=["bold"]) + colored(str(min_value) + " pb.", "yellow", attrs=["bold"])
 
 
+##########
+#  Main  #
+##########
+
+def main():
+
+	a = fasta2list(args.FASTA, args.delimiter)
+	reportar_longitudes(a, args.min, args.max)
+
+if __name__ == "__main__":
+    main()
 
 
-
-a = fasta2list(sys.argv[1], delim)
-reportar_longitudes(a)
