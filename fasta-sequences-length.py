@@ -1,17 +1,16 @@
 #!/usr/bin/python
 # Encoding: utf8
-
+# Dani Carrillo Bautista
 
 # Script para reportar por terminal la longitud de las secuencias en un fasta.
 # Está pensado para assemblies. 
 
-import sys
 from termcolor import *
 import argparse
 
 parser = argparse.ArgumentParser(description="Reporta la longitud de las lecturas en un fasta. Está pensado para assemblies, aunque se puede utilizar con cualquier multifasta")
 
-parser.add_argument("-d", "--delimiter", default=">", help="Caracter para spliter el multifasta en las secuencias individuales (default: '>')")
+parser.add_argument("-d", "--delimiter", default=">", help="Caracter para splitear el multifasta en las secuencias individuales (default: '>')")
 parser.add_argument("-max", help="Umbral de longitud superior para reportar por terminal (default: 100k)", default= 100000, type= int)
 parser.add_argument("-min", help="Umbral de longitud inferior para reportar por terminal (default: 500)", default= 500, type = int) 
 parser.add_argument("FASTA")
