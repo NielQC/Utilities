@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description="Realiza un análisis RBBH con los 
 
 parser.add_argument("A", help="Primer archivo FASTA.")
 parser.add_argument("B", help="Segundo archivo FASTA.")
-parser.add_argument("-o", "--output")
+parser.add_argument("-o", "--output", required=True)
 parser.add_argument("-id", "--identity", help="Porcentaje de identidad umbral (default: 90)", default=90, type=int)
 parser.add_argument("-cov", "--coverage", help="Porcentaje de coverage umbral para la secuencia query (default: 50)", default=50, type=int)
 parser.add_argument("-mode", help="Modo 'prot' o 'nucl' (default: 'prot').", default="prot", choices=["prot", "nucl"])
@@ -28,10 +28,10 @@ args = parser.parse_args()
 def crear_directorios (path, file_A, file_B):
 	if not os.path.exists(os.path.abspath(path)):
 		os.makedirs(os.path.abspath(path))
-	if not os.path.exists(os.path.abspath(path) + "/" + file_A):
-		os.makedirs(os.path.abspath(path) + "/" + file_A + "/db")
-	if not os.path.exists(os.path.abspath(path) + "/" + file_B):
-		os.makedirs(os.path.abspath(path) + "/" + file_B + "/db")
+	if not os.path.exists(os.path.abspath(path) + "/" + file_A.split("/")[-1]):
+		os.makedirs(os.path.abspath(path) + "/" + file_A.split("/")[-1] + "/db")
+	if not os.path.exists(os.path.abspath(path) + "/" + file_B.split("/")[-1]):
+		os.makedirs(os.path.abspath(path) + "/" + file_B.split("/")[-1] + "/db")
 
 ##
 def makeblastdb (path, file_A, file_B, makeblastdb_path, mode):
