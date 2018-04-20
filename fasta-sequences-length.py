@@ -24,7 +24,7 @@ def fasta2list (file, delim):
 	a = open(file, "r")
 	b = a.read().split(delim)
 	while "" in b:
-		b.remove()
+		b.remove("")
 	return b
 
 ## Función que coge la lista proporcionada por la función anterior, 

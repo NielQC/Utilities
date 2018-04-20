@@ -59,14 +59,16 @@ def reciprocal(path, file_A, file_B, identity, coverage):
 	dict_A = dict()
 	for linea in open(os.path.abspath(path) + "/" + file_A.split("/")[-1] + "/" + file_A.split("/")[-1].split(".")[0] + "_query.blast", "r"):
 		campos = linea.split("\t")
-		if float(campos[2]) > identity and float(campos[4]) > coverage:
+		if float(campos[2].replace(",", ".")) > identity and float(campos[4]) > coverage:
 			if campos[0] not in dict_A:
 				dict_A[campos[0]] = campos[1]
+		else:
+			print linea
 	
 	dict_B = dict()
 	for linea in open(os.path.abspath(path) + "/" + file_B.split("/")[-1] + "/" + file_B.split("/")[-1].split(".")[0] + "_query.blast", "r"):
 		campos = linea.split("\t")
-		if float(campos[2]) > identity and float(campos[4]) > coverage:
+		if float(campos[2].replace(",", ".")) > identity and float(campos[4]) > coverage:
 			if campos[0] not in dict_B:
 				dict_B[campos[0]] = campos[1]
 
