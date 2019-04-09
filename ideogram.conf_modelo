@@ -1,0 +1,42 @@
+
+<ideogram>
+
+<spacing>
+default = 0.005r
+</spacing>
+
+
+# Ideogram position, fill and outline
+radius           = 0.80r
+thickness        = 80p
+fill             = yes
+stroke_color     = black
+stroke_thickness = 2p
+
+# Minimum definition for ideogram labels.
+
+show_label       = yes
+# see etc/fonts.conf for list of font names
+#label_font       = default 
+#label_radius     = dims(image,radius) - 100p # if ideogram radius is constant, and you'd like labels close to image edge, 
+                           # use the dims() function to access the size of the image
+                           # label_radius  = dims(image,radius) - 60p
+label_radius     = 1.04r
+label_size       = 35
+label_parallel   = no
+label_font       = serif_roman
+
+
+# $HIDE
+
+
+<rules>
+<rule>
+importance = 100
+condition  = 1
+value      = eval(my $x = _LABEL_; $x =~ s/_/ /g; $x)
+</rule>
+</rules> 
+
+</ideogram>
+

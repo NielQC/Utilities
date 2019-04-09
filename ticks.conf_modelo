@@ -1,0 +1,39 @@
+
+show_ticks          = yes
+show_tick_labels    = yes
+
+<ticks>
+
+radius           = dims(ideogram,radius_outer)
+orientation      = out
+label_multiplier = 1e-6
+color            = black
+thickness        = 3p
+label_offset     = 5p
+
+
+<tick>
+spacing        = 2u
+show_label     = yes
+size           = 20p
+label_size     = 25p
+suffix         = " Mb"  
+</tick>
+
+
+<tick>
+spacing        = 0.5u
+show_label     = yes
+size           = 15p
+label_size     = 20p
+</tick>
+
+
+<tick>
+spacing        = 0.25u
+show_label     = no
+size           = 12p
+label_size     = 20p
+</tick>
+
+</ticks>
